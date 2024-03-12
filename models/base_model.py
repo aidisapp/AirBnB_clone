@@ -1,21 +1,26 @@
 #!/usr/bin/python3
-
-"""Module for Base class
-This actually contains the Base class for the AirBnB clone console
+"""
+Module for BaseModel class
+This module contains the BaseModel class representing the base model
+for all other classes. It contains common attributes and methods.
 """
 
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
     """
-    This class represents the base model for all other classes.
-    It contains common attributes and methods.
+    BaseModel class
     """
 
     def __init__(self, *args, **kwargs):
-        """Initialize the BaseModel instance."""
+        """
+        Initialize the BaseModel instance.
+        If it's a new instance (not from a dictionary representation),
+        add a call to the method new(self) on storage.
+        """
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -28,24 +33,29 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-
-    def __str__(self):
-        """Return a string representation of the BaseModel instance."""
-        return f"[BaseModel] ({self.id}) {self.__dict__}"
+            storage.new(self)
 
     def save(self):
-        """Update the 'updated_at' attribute with the current datetime."""
+        """
+        Update the 'updated_at' attribute with the current datetime.
+        Call save(self) method of storage.
+        """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
         Return a dictionary representation of the BaseModel instance.
-
-        Returns:
-            dict: Dictionary containing all instance attributes.
         """
         obj_dict = self.__dict__.copy()
         obj_dict['__class__'] = self.__class__.__name__
         obj_dict['created_at'] = self.created_at.isoformat()
         obj_dict['updated_at'] = self.updated_at.isoformat()
         return obj_dict
+
+    def __str__(self):
+        """
+        Return a string representation of the BaseModel instance.
+        """
+        return "[{}] ({}) {}".format(
+            self.__class__.__name__, self.id, self.__dict__)
