@@ -17,6 +17,13 @@ from models.amenity import Amenity
 from models.review import Review
 
 
+def parse(arg):
+    """
+    Method to parse a string of arguments into separate tokens.
+    """
+    return split(arg)
+
+
 class HBNBCommand(cmd.Cmd):
     """HolbertonBnB Command Processor.
 
@@ -62,11 +69,11 @@ class HBNBCommand(cmd.Cmd):
         return False
 
     def do_quit(self, arg):
-        """Quit the HolbertonBnB console."""
+        """Quit the program."""
         return True
 
     def do_EOF(self, arg):
-        """Exit the HolbertonBnB console."""
+        """Exit the program."""
         print("")
         return True
 

@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
 Module for BaseModel class
 This module contains the BaseModel class representing the base model
@@ -7,7 +8,6 @@ for all other classes. It contains common attributes and methods.
 
 import uuid
 from datetime import datetime
-from models import storage
 
 
 class BaseModel:
@@ -22,6 +22,7 @@ class BaseModel:
         add a call to the method new(self) on storage.
         """
         if kwargs:
+            from models import storage  # Import storage here
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key == 'created_at' or key == 'updated_at':
@@ -33,7 +34,8 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            from models import storage  # Import storage here
+            storage.new(self)  # Now you can use storage here
 
     def save(self):
         """
@@ -41,7 +43,8 @@ class BaseModel:
         Call save(self) method of storage.
         """
         self.updated_at = datetime.now()
-        storage.save()
+        from models import storage  # Import storage here
+        storage.save()  # Now you can use storage here
 
     def to_dict(self):
         """
@@ -59,3 +62,4 @@ class BaseModel:
         """
         return "[{}] ({}) {}".format(
             self.__class__.__name__, self.id, self.__dict__)
+
