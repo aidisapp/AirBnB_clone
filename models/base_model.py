@@ -8,6 +8,7 @@ for all other classes. It contains common attributes and methods.
 
 import uuid
 from datetime import datetime
+from models import storage  # Import storage here
 
 
 class BaseModel:
@@ -22,7 +23,6 @@ class BaseModel:
         add a call to the method new(self) on storage.
         """
         if kwargs:
-            from models import storage  # Import storage here
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key == 'created_at' or key == 'updated_at':
@@ -34,7 +34,6 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            from models import storage  # Import storage here
             storage.new(self)  # Now you can use storage here
 
     def save(self):
@@ -43,7 +42,6 @@ class BaseModel:
         Call save(self) method of storage.
         """
         self.updated_at = datetime.now()
-        from models import storage  # Import storage here
         storage.save()  # Now you can use storage here
 
     def to_dict(self):
@@ -62,4 +60,3 @@ class BaseModel:
         """
         return "[{}] ({}) {}".format(
             self.__class__.__name__, self.id, self.__dict__)
-

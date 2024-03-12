@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
 Module for FileStorage class
 This module contains the FileStorage class responsible for
@@ -8,12 +9,12 @@ serializing instances to a JSON file and deserializing JSON files to instances.
 import json
 import os
 import datetime
+from models.base_model import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-
 from models.review import Review
 
 
@@ -51,17 +52,6 @@ class FileStorage:
         """
         with open(self.__file_path, 'w') as f:
             json.dump(self.__objects, f)
-
-    def reload(self):
-        """
-        Deserialize the JSON file (__file_path) to __objects
-        if the file exists.
-        """
-        try:
-            with open(self.__file_path, 'r') as f:
-                self.__objects = json.load(f)
-        except FileNotFoundError:
-            pass
 
     def classes(self):
         """
