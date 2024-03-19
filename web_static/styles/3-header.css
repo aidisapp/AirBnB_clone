@@ -1,0 +1,10 @@
+header {
+    height: 70px;
+    background-color: #000; /* Adjust color as needed */
+    display: flex;
+    align-items: center;
+}
+
+header .logo {
+    margin-right: auto;
+}
