@@ -1,10 +1,11 @@
 header {
     height: 70px;
-    background-color: #000; /* Adjust color as needed */
+    width: 100%;
+    background-color: #CCCCCC; 
     display: flex;
     align-items: center;
-}
-
-header .logo {
-    margin-right: auto;
+    background-image: url(../images/AirBnB.png);
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding-left: 20px;
 }
